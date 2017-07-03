@@ -11,7 +11,7 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'library/sass',
+          cwd: 'library/scss',
           src: ['**/*.scss'],
           dest: 'library/css',
           ext: '.css'
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: 'library/css',
-          src: ['*.css', '!*-min.css'],
+          src: ['!*-min.css','*.css',],
           dest: 'library/css',
           ext: '-min.css'
     }]
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: 'library/js',
-          src: ['**/*.js', '!min/*-min.js'],
+          src: ['!min/*-min.js', '**/*.js'],
           dest: 'library/js/min',
           ext: '-min.js'
         }]
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
         tasks: ['sass', 'postcss', 'cssmin']
       },
       js: {
-        files: ['**/*.js','!*-min.js'],
+        files: ['!*-min.js','!min','**/*.js'],
         tasks: ['uglify']
       }
     }
