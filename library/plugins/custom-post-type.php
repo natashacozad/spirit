@@ -33,16 +33,16 @@ plugin. Sweetness.
 
 
 // Flush rewrite rules for custom post types
-add_action( 'after_switch_theme', 'template_flush_rewrite_rules' );
+add_action( 'after_switch_theme', 'spirit_flush_rewrite_rules' );
 
 // Flush your rewrite rules
-function template_flush_rewrite_rules() {
+function spirit_flush_rewrite_rules() {
 	flush_rewrite_rules();
 }
 
 
 // Register Custom Post Type
-function template_staff_cpt() {
+function spirit_staff_cpt() {
 
 	$labels = array(
 		'name'                  => _x( 'Staff', 'Post Type General Name', 'text_domain' ),
@@ -98,14 +98,14 @@ function template_staff_cpt() {
 		'rewrite'               => $rewrite,
 		'capability_type'       => 'page',
 	);
-	register_post_type( 'template_staff', $args );
+	register_post_type( 'spirit_staff', $args );
 
 }
-add_action( 'init', 'template_staff_cpt', 0 );
+add_action( 'init', 'spirit_staff_cpt', 0 );
 
 
 // Register Custom Taxonomy
-function template_staff_grouping_tax() {
+function spirit_staff_grouping_tax() {
 
 	$labels = array(
 		'name'                       => _x( 'Groupings', 'Taxonomy General Name', 'text_domain' ),
@@ -138,31 +138,31 @@ function template_staff_grouping_tax() {
 		'show_in_nav_menus'          => false,
 		'show_tagcloud'              => false,
 	);
-	register_taxonomy( 'grouping', array( 'template_staff' ), $args );
+	register_taxonomy( 'grouping', array( 'spirit_staff' ), $args );
 
 }
 
-add_action( 'init', 'template_staff_grouping_tax', 0 );
+add_action( 'init', 'spirit_staff_grouping_tax', 0 );
 
 
 // Change the 'Title' field text on edit screen
-function template_staff_change_title_text( $title ){
+function spirit_staff_change_title_text( $title ){
      $screen = get_current_screen();
  
-     if  ( 'template_staff' == $screen->post_type ) {
+     if  ( 'spirit_staff' == $screen->post_type ) {
           $title = 'Full Name (First Last)';
      }
  
      return $title;
 }
  
-add_filter( 'enter_title_here', 'template_staff_change_title_text' );
+add_filter( 'enter_title_here', 'spirit_staff_change_title_text' );
 
 
 // Add sortable admin columns dopeness
-add_filter("manage_edit-template_staff_sortable_columns", 'template_staff_sort');
+add_filter("manage_edit-template_staff_sortable_columns", 'spirit_staff_sort');
 
-function template_staff_sort($columns) {
+function spirit_staff_sort($columns) {
    $custom = array(
        'taxonomy-grouping' => 'taxonomy-grouping'
    );

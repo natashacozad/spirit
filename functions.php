@@ -26,46 +26,46 @@ LAUNCH TEMPLATE
 Let's get everything up and running.
 *********************/
 
-function template_launch() {
+function spirit_launch() {
 
   //Allow editor style.
   add_editor_style( get_stylesheet_directory_uri() . '/library/css/editor-style.css' );
 
   // let's get language support going, if you need it
-  //load_theme_textdomain( 'templatetheme', get_template_directory() . '/library/translation' );
+  //load_theme_textdomain( 'spirit', get_template_directory() . '/library/translation' );
 
   // launching operation cleanup
-  add_action( 'init', 'template_head_cleanup' );
+  add_action( 'init', 'spirit_head_cleanup' );
   // A better title
   add_filter( 'wp_title', 'rw_title', 10, 3 );
   // remove WP version from RSS
-  add_filter( 'the_generator', 'template_rss_version' );
+  add_filter( 'the_generator', 'spirit_rss_version' );
   // remove pesky injected css for recent comments widget
-  add_filter( 'wp_head', 'template_remove_wp_widget_recent_comments_style', 1 );
+  add_filter( 'wp_head', 'spirit_remove_wp_widget_recent_comments_style', 1 );
   // clean up comment styles in the head
-  add_action( 'wp_head', 'template_remove_recent_comments_style', 1 );
+  add_action( 'wp_head', 'spirit_remove_recent_comments_style', 1 );
   // clean up gallery output in wp
-  add_filter( 'gallery_style', 'template_gallery_style' );
+  add_filter( 'gallery_style', 'spirit_gallery_style' );
 
   // enqueue base scripts and styles
-  add_action( 'wp_enqueue_scripts', 'template_scripts_and_styles', 999 );
+  add_action( 'wp_enqueue_scripts', 'spirit_scripts_and_styles', 999 );
   // ie conditional wrapper
 
   // launching this stuff after theme setup
-  template_theme_support();
+  spirit_theme_support();
 
   // adding sidebars to Wordpress (these are created in functions.php)
-  add_action( 'widgets_init', 'template_register_sidebars' );
+  add_action( 'widgets_init', 'spirit_register_sidebars' );
 
   // cleaning up random code around images
-  add_filter( 'the_content', 'template_filter_ptags_on_images' );
+  add_filter( 'the_content', 'spirit_filter_ptags_on_images' );
   // cleaning up excerpt
-  add_filter( 'excerpt_more', 'template_excerpt_more' );
+  add_filter( 'excerpt_more', 'spirit_excerpt_more' );
 
 } /* end template ahoy */
 
 // let's get this party started
-add_action( 'after_setup_theme', 'template_launch' );
+add_action( 'after_setup_theme', 'spirit_launch' );
 
 
 
@@ -96,13 +96,13 @@ You can change the names and dimensions to whatever
 you like. Enjoy!
 */
 
-add_filter( 'image_size_names_choose', 'template_custom_image_sizes' );
+add_filter( 'image_size_names_choose', 'spirit_custom_image_sizes' );
 
-function template_custom_image_sizes( $sizes ) {
+function spirit_custom_image_sizes( $sizes ) {
     return array_merge( $sizes, array(
-        'template-image-600' => __('600px by 600px', 'templatetheme'),
-        'template-image-300' => __('300px by 300px', 'templatetheme'),
-        'template-image-150' => __('150px by 150px', 'templatetheme'),
+        'template-image-600' => __('600px by 600px', 'spirit'),
+        'template-image-300' => __('300px by 300px', 'spirit'),
+        'template-image-150' => __('150px by 150px', 'spirit'),
     ) );
 }
 
@@ -118,11 +118,11 @@ new image size.
 /************* ACTIVE SIDEBARS ********************/
 
 // Sidebars & Widgetizes Areas
-function template_register_sidebars() {
+function spirit_register_sidebars() {
 	register_sidebar(array(
 		'id' => 'sidebar1',
-		'name' => __( 'Sidebar 1', 'templatetheme' ),
-		'description' => __( 'The first (primary) sidebar.', 'templatetheme' ),
+		'name' => __( 'Sidebar 1', 'spirit' ),
+		'description' => __( 'The first (primary) sidebar.', 'spirit' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4 class="widgettitle">',
@@ -139,8 +139,8 @@ function template_register_sidebars() {
 
 	register_sidebar(array(
 		'id' => 'sidebar2',
-		'name' => __( 'Sidebar 2', 'templatetheme' ),
-		'description' => __( 'The second (secondary) sidebar.', 'templatetheme' ),
+		'name' => __( 'Sidebar 2', 'spirit' ),
+		'description' => __( 'The second (secondary) sidebar.', 'spirit' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4 class="widgettitle">',
@@ -175,7 +175,7 @@ function new_default_avatar ( $avatar_defaults ) {
 
 
 // Comment Layout
-function template_comments( $comment, $args, $depth ) {
+function spirit_comments( $comment, $args, $depth ) {
    $GLOBALS['comment'] = $comment; ?>
   <div id="comment-<?php comment_ID(); ?>" <?php comment_class('cf'); ?>>
     <article  class="cf">
@@ -193,13 +193,13 @@ function template_comments( $comment, $args, $depth ) {
         ?>
         <img data-gravatar="//www.gravatar.com/avatar/<?php echo md5( $bgauthemail ); ?>?s=40" class="load-gravatar avatar avatar-48 photo" height="40" width="40" src="<?php echo get_template_directory_uri(); ?>/library/images/nothing.gif" />
         <?php // end custom gravatar call ?>
-        <?php printf(__( '<cite class="fn">%1$s</cite> %2$s', 'templatetheme' ), get_comment_author_link(), edit_comment_link(__( '(Edit)', 'templatetheme' ),'  ','') ) ?>
-        <time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time(__( 'F jS, Y', 'templatetheme' )); ?> </a></time>
+        <?php printf(__( '<cite class="fn">%1$s</cite> %2$s', 'spirit' ), get_comment_author_link(), edit_comment_link(__( '(Edit)', 'spirit' ),'  ','') ) ?>
+        <time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time(__( 'F jS, Y', 'spirit' )); ?> </a></time>
 
       </header>
       <?php if ($comment->comment_approved == '0') : ?>
         <div class="alert alert-info">
-          <p><?php _e( 'Your comment is awaiting moderation.', 'templatetheme' ) ?></p>
+          <p><?php _e( 'Your comment is awaiting moderation.', 'spirit' ) ?></p>
         </div>
       <?php endif; ?>
       <section class="comment_content cf">
@@ -215,11 +215,11 @@ function template_comments( $comment, $args, $depth ) {
 /*
 Use this to add Google or other web fonts.
 */
-// function template_fonts() {
+// function spirit_fonts() {
 //   wp_enqueue_style('templateFonts', 'http://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,');
 // }
 
-// add_action('wp_enqueue_scripts', 'template_fonts');
+// add_action('wp_enqueue_scripts', 'spirit_fonts');
 
 
 /****************************************
@@ -261,7 +261,7 @@ removing all the junk we don't
 need.
 *********************/
 
-function template_head_cleanup() {
+function spirit_head_cleanup() {
   // category feeds
   remove_action( 'wp_head', 'feed_links_extra', 3 );
   // post and comment feeds
@@ -279,32 +279,32 @@ function template_head_cleanup() {
   // WP version
   remove_action( 'wp_head', 'wp_generator' );
   // remove WP version from css
-  add_filter( 'style_loader_src', 'template_remove_wp_ver_css_js', 9999 );
+  add_filter( 'style_loader_src', 'spirit_remove_wp_ver_css_js', 9999 );
   // remove WP version from scripts
-  add_filter( 'script_loader_src', 'template_remove_wp_ver_css_js', 9999 );
+  add_filter( 'script_loader_src', 'spirit_remove_wp_ver_css_js', 9999 );
 
 } /* end template head cleanup */
 
 
 // remove WP version from RSS
-function template_rss_version() { return ''; }
+function spirit_rss_version() { return ''; }
 
 // remove WP version from scripts
-function template_remove_wp_ver_css_js( $src ) {
+function spirit_remove_wp_ver_css_js( $src ) {
   if ( strpos( $src, 'ver=' ) )
     $src = remove_query_arg( 'ver', $src );
   return $src;
 }
 
 // remove injected CSS for recent comments widget
-function template_remove_wp_widget_recent_comments_style() {
+function spirit_remove_wp_widget_recent_comments_style() {
   if ( has_filter( 'wp_head', 'wp_widget_recent_comments_style' ) ) {
     remove_filter( 'wp_head', 'wp_widget_recent_comments_style' );
   }
 }
 
 // remove injected CSS from recent comments widget
-function template_remove_recent_comments_style() {
+function spirit_remove_recent_comments_style() {
   global $wp_widget_factory;
   if (isset($wp_widget_factory->widgets['WP_Widget_Recent_Comments'])) {
     remove_action( 'wp_head', array($wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style') );
@@ -312,7 +312,7 @@ function template_remove_recent_comments_style() {
 }
 
 // remove injected CSS from gallery
-function template_gallery_style($css) {
+function spirit_gallery_style($css) {
   return preg_replace( "!<style type='text/css'>(.*?)</style>!s", '', $css );
 }
 
@@ -322,7 +322,7 @@ SCRIPTS & ENQUEUEING
 *********************/
 
 // loading modernizr and jquery, and reply script
-function template_scripts_and_styles() {
+function spirit_scripts_and_styles() {
 
   global $wp_styles; // call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
 
@@ -397,8 +397,8 @@ function disable_emojicons_tinymce( $plugins ) {
 
 
 // Dequeue jQuery Migrate
-add_action( 'wp_default_scripts', 'template_dequeue_jquery_migrate' );
-function template_dequeue_jquery_migrate( $scripts ) {
+add_action( 'wp_default_scripts', 'spirit_dequeue_jquery_migrate' );
+function spirit_dequeue_jquery_migrate( $scripts ) {
   if (! empty( $scripts->registered['jquery'] ) ) {
     $jquery_dependencies = $scripts->registered['jquery']->deps;
     $scripts->registered['jquery']->deps = array_diff( $jquery_dependencies, array( 'jquery-migrate' ) );
@@ -411,7 +411,7 @@ THEME SUPPORT
 *********************/
 
 // Adding WP 3+ Functions & Theme Support
-function template_theme_support() {
+function spirit_theme_support() {
 
   // wp thumbnails (sizes handled in functions.php)
   add_theme_support( 'post-thumbnails' );
@@ -436,7 +436,7 @@ function template_theme_support() {
       'default-text-color'     => 'ffffff',
       'header-text'            => true,
       'uploads'                => true,
-      'wp-head-callback'       => 'template_style_header'
+      'wp-head-callback'       => 'spirit_style_header'
   ) );
 
   // Custom Logo
@@ -458,8 +458,8 @@ function template_theme_support() {
   // To add another menu, uncomment the second line and change it to whatever you want. You can have even more menus.
   register_nav_menus(
     array(
-      'main-nav' => __( 'The Main Menu', 'templatetheme' ),   // main nav in header
-      // 'footer-links' => __( 'Footer Links', 'templatetheme' ) // secondary nav in footer. Uncomment to use
+      'main-nav' => __( 'The Main Menu', 'spirit' ),   // main nav in header
+      // 'footer-links' => __( 'Footer Links', 'spirit' ) // secondary nav in footer. Uncomment to use
     )
   );
 
@@ -522,9 +522,9 @@ function woocommerce_support() {
 * CUSTOMIZER *
 ****************************************/
 
-add_action( 'customize_register', 'template_register_theme_customizer' );
+add_action( 'customize_register', 'spirit_register_theme_customizer' );
 
-function template_register_theme_customizer( $wp_customize ) {
+function spirit_register_theme_customizer( $wp_customize ) {
 
   // Uncomment this to see what's going on if you make a lot of changes
   // echo '<pre>';
@@ -532,26 +532,26 @@ function template_register_theme_customizer( $wp_customize ) {
   // echo '</pre>';
 
   // Customize title and tagline sections and labels
-  $wp_customize->get_section('title_tagline')->title = __('Site Name and Description', 'templatetheme');  
-  $wp_customize->get_control('blogname')->label = __('Site Name', 'templatetheme');  
-  $wp_customize->get_control('blogdescription')->label = __('Site Description', 'templatetheme');  
+  $wp_customize->get_section('title_tagline')->title = __('Site Name and Description', 'spirit');  
+  $wp_customize->get_control('blogname')->label = __('Site Name', 'spirit');  
+  $wp_customize->get_control('blogdescription')->label = __('Site Description', 'spirit');  
   $wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
   $wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 
   // Customize the Front Page Settings
-  $wp_customize->get_section('static_front_page')->title = __('Homepage Preferences', 'templatetheme');
+  $wp_customize->get_section('static_front_page')->title = __('Homepage Preferences', 'spirit');
   $wp_customize->get_section('static_front_page')->priority = 20;
-  $wp_customize->get_control('show_on_front')->label = __('Choose Homepage Preference:', 'templatetheme');  
-  $wp_customize->get_control('page_on_front')->label = __('Select Homepage:', 'templatetheme');  
-  $wp_customize->get_control('page_for_posts')->label = __('Select Blog Homepage:', 'templatetheme');  
+  $wp_customize->get_control('show_on_front')->label = __('Choose Homepage Preference:', 'spirit');  
+  $wp_customize->get_control('page_on_front')->label = __('Select Homepage:', 'spirit');  
+  $wp_customize->get_control('page_for_posts')->label = __('Select Blog Homepage:', 'spirit');  
 
   // Customize Background Settings
-  $wp_customize->get_section('background_image')->title = __('Background Styles', 'templatetheme');  
+  $wp_customize->get_section('background_image')->title = __('Background Styles', 'spirit');  
   $wp_customize->get_control('background_color')->section = 'background_image'; 
 
   // Customize Header Image Settings  
   $wp_customize->add_section( 'header_text_styles' , array(
-    'title'      => __('Header Text Styles','templatetheme'), 
+    'title'      => __('Header Text Styles','spirit'), 
     'priority'   => 30    
   ) );
   $wp_customize->get_control('display_header_text')->section = 'header_text_styles';  
@@ -562,11 +562,11 @@ function template_register_theme_customizer( $wp_customize ) {
 
 
 // Custom scripts + styles for theme customizer
-add_action( 'customize_preview_init', 'template_customizer_scripts' );
+add_action( 'customize_preview_init', 'spirit_customizer_scripts' );
 
-function template_customizer_scripts() {
+function spirit_customizer_scripts() {
   wp_enqueue_script(
-    'template_theme_customizer',
+    'spirit_theme_customizer',
     get_template_directory_uri() . '/library/js/theme-customizer.js',
     array( 'jquery', 'customize-preview' ),
     '',
@@ -581,7 +581,7 @@ function template_customizer_scripts() {
 
 
 // Callback function for updating header styles
-function template_style_header() {
+function spirit_style_header() {
 
   $text_color = get_header_textcolor();
   
@@ -618,7 +618,7 @@ RELATED POSTS FUNCTION
 *********************/
 
 // Related Posts Function (call using template_related_posts(); )
-function template_related_posts() {
+function spirit_related_posts() {
   echo '<ul id="template-related-posts">';
   global $post;
   $tags = wp_get_post_tags( $post->ID );
@@ -637,7 +637,7 @@ function template_related_posts() {
         <li class="related_post"><a class="entry-unrelated" href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
       <?php endforeach; }
     else { ?>
-      <?php echo '<li class="no_related_post">' . __( 'No Related Posts Yet!', 'templatetheme' ) . '</li>'; ?>
+      <?php echo '<li class="no_related_post">' . __( 'No Related Posts Yet!', 'spirit' ) . '</li>'; ?>
     <?php }
   }
   wp_reset_postdata();
@@ -649,7 +649,7 @@ PAGE NAVI
 *********************/
 
 // Numeric Page Navi (built into the theme by default)
-function template_page_navi() {
+function spirit_page_navi() {
   global $wp_query;
   $bignum = 999999999;
   if ( $wp_query->max_num_pages <= 1 )
@@ -674,15 +674,15 @@ RANDOM CLEANUP ITEMS
 *********************/
 
 // remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
-function template_filter_ptags_on_images($content){
+function spirit_filter_ptags_on_images($content){
   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 
 // This removes the annoying […] to a Read More link
-function template_excerpt_more($more) {
+function spirit_excerpt_more($more) {
   global $post;
   // edit here if you like
-  return '...  <a class="excerpt-read-more" href="'. get_permalink( $post->ID ) . '" title="'. __( 'Read ', 'templatetheme' ) . esc_attr( get_the_title( $post->ID ) ).'">'. __( 'Read more &raquo;', 'templatetheme' ) .'</a>';
+  return '...  <a class="excerpt-read-more" href="'. get_permalink( $post->ID ) . '" title="'. __( 'Read ', 'spirit' ) . esc_attr( get_the_title( $post->ID ) ).'">'. __( 'Read more &raquo;', 'spirit' ) .'</a>';
 }
 
 
@@ -695,9 +695,9 @@ function template_excerpt_more($more) {
 // Body Class functions
 // Adds more slugs to body class so we can style individual pages + posts.
 // Page Slug Body Class
-add_filter( 'body_class', 'template_body_class' );
+add_filter( 'body_class', 'spirit_body_class' );
 
-function template_body_class( $classes ) {
+function spirit_body_class( $classes ) {
 global $post;
   if ( isset( $post ) ) {
   /* $classes[] = $post->post_type . '-' . $post->post_name; *//*Un comment this if you want the post_type-post_name body class */
@@ -744,9 +744,9 @@ return $classes;
 // Let's add some extra Quicktags
 // These come in handy especially for clients who aren't HTML masters
 // Hook into the 'admin_print_footer_scripts' action
-add_action( 'admin_print_footer_scripts', 'template_custom_quicktags' );
+add_action( 'admin_print_footer_scripts', 'spirit_custom_quicktags' );
 
-function template_custom_quicktags() {
+function spirit_custom_quicktags() {
 
   if ( wp_script_is( 'quicktags' ) ) {
   ?>
@@ -767,38 +767,38 @@ function template_custom_quicktags() {
 // Load dashicons on the front end
 // To use, go here and copy the css/html for the dashicon you want: https://developer.wordpress.org/resource/dashicons/
 // Example: <span class="dashicons dashicons-wordpress"></span>
-add_action( 'wp_enqueue_scripts', 'template_load_dashicons' );
-function template_load_dashicons() {
+add_action( 'wp_enqueue_scripts', 'spirit_load_dashicons' );
+function spirit_load_dashicons() {
     wp_enqueue_style( 'dashicons' );
 }
 
 
 // Post Author function (from WP Twenty Seventeen theme)
 // We use this in the byline template part but included here in case you want to use it elsewhere.
-if ( ! function_exists( 'template_posted_on' ) ) :
+if ( ! function_exists( 'spirit_posted_on' ) ) :
 /**
  * Prints HTML with meta information for the current post-date/time and author.
  */
-function template_posted_on() {
+function spirit_posted_on() {
 
   // Get the author name; wrap it in a link.
   $byline = sprintf(
     /* translators: %s: post author */
-    __( 'by %s', 'templatetheme' ),
+    __( 'by %s', 'spirit' ),
     '<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . get_the_author() . '</a></span>'
   );
 
   // Finally, let's write all of this to the page.
-  echo '<span class="posted-on">' . template_time_link() . '</span><span class="byline"> ' . $byline . '</span>';
+  echo '<span class="posted-on">' . spirit_time_link() . '</span><span class="byline"> ' . $byline . '</span>';
 }
 endif;
 
 // Post Time function (from WP Twenty Seventeen theme)
-if ( ! function_exists( 'template_time_link' ) ) :
+if ( ! function_exists( 'spirit_time_link' ) ) :
 /**
  * Gets a nicely formatted string for the published date.
  */
-function template_time_link() {
+function spirit_time_link() {
   $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
   // if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
   //   $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
@@ -814,7 +814,7 @@ function template_time_link() {
   // Wrap the time string in a link, and preface it with 'Posted on'.
   return sprintf(
     /* translators: %s: post date */
-    __( '<span class="screen-reader-text">Posted on</span> %s', 'templatetheme' ),
+    __( '<span class="screen-reader-text">Posted on</span> %s', 'spirit' ),
     '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
   );
 }

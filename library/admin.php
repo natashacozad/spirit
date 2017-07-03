@@ -24,9 +24,9 @@ to have any of these back, comment them out.
 */
 
 
-add_action('wp_dashboard_setup', 'template_remove_dashboard_widgets');
+add_action('wp_dashboard_setup', 'spirit_remove_dashboard_widgets');
 
-function template_remove_dashboard_widgets() {
+function spirit_remove_dashboard_widgets() {
 
   remove_meta_box('dashboard_quick_press','dashboard','side'); //Quick Press widget
   remove_meta_box('dashboard_recent_drafts','dashboard','side'); //Recent Drafts
@@ -53,20 +53,20 @@ Customize it, we don't criticize it.
 
 //Updated to proper 'enqueue' method
 //http://codex.wordpress.org/Plugin_API/Action_Reference/login_enqueue_scripts
-function template_login_css() {
-	wp_enqueue_style( 'template_login_css', get_template_directory_uri() . '/library/css/login.css', false );
+function spirit_login_css() {
+	wp_enqueue_style( 'spirit_login_css', get_template_directory_uri() . '/library/css/login.css', false );
 }
 
 // changing the logo link from wordpress.org to your site
-function template_login_url() {  return home_url(); }
+function spirit_login_url() {  return home_url(); }
 
 // changing the alt text on the logo to show your site name
-function template_login_title() { return get_option( 'blogname' ); }
+function spirit_login_title() { return get_option( 'blogname' ); }
 
 // calling it only on the login page
-add_action( 'login_enqueue_scripts', 'template_login_css', 10 );
-add_filter( 'login_headerurl', 'template_login_url' );
-add_filter( 'login_headertitle', 'template_login_title' );
+add_action( 'login_enqueue_scripts', 'spirit_login_css', 10 );
+add_filter( 'login_headerurl', 'spirit_login_url' );
+add_filter( 'login_headertitle', 'spirit_login_title' );
 
 
 /*********************
@@ -81,19 +81,19 @@ are a few funtions which you can choose to use if
 you like.
 */
 
-function template_admin_css() {
-  wp_enqueue_style( 'template_admin_css', get_template_directory_uri() . '/library/css/admin.css', false );
+function spirit_admin_css() {
+  wp_enqueue_style( 'spirit_admin_css', get_template_directory_uri() . '/library/css/admin.css', false );
 }
-add_action( 'login_enqueue_scripts', 'template_admin_css', 10 );
+add_action( 'login_enqueue_scripts', 'spirit_admin_css', 10 );
 
 
 
 // Custom Backend Footer
 // adding it to the admin area
-add_filter( 'admin_footer_text', 'template_custom_admin_footer' );
+add_filter( 'admin_footer_text', 'spirit_custom_admin_footer' );
 
-function template_custom_admin_footer() {
-	_e( '<span id="footer-thankyou">Developed by <a href="https://studio.bio" target="_blank">studio.bio</a></span>. Built using <a href="https://studio.bio/template" target="_blank">Template</a>.', 'templatetheme' );
+function spirit_custom_admin_footer() {
+	_e( '<span id="footer-thankyou">Developed by <a href="https://studio.bio" target="_blank">studio.bio</a></span>. Built using <a href="https://studio.bio/template" target="_blank">Template</a>.', 'spirit' );
 }
 
 ?>
